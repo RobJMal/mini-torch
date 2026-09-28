@@ -34,15 +34,17 @@ def main():
     target_data = np.array([[0.5], [2]])
 
     mlp = MLP()
-    output_test1 = mlp.forward(input_data)
-    print(f"output: {output_test1}")
-    print("")
-
     loss_fn = MSELoss()
-    loss = loss_fn.forward(output_test1, target_data)
-    grad = loss_fn.backward()
-    mlp.backward(grad)
-    mlp.update_linear_layers()
 
+    for step in range(1000):
+        prediction = mlp.forward(input_data)
+        loss = loss_fn.forward(prediction, target_data)
+        grad = loss_fn.backward()
+        mlp.backward(grad)
+        mlp.update_linear_layers()
+
+        if step % 50 == 0:
+            print(loss)
+    
 if __name__ == "__main__":
     main()
