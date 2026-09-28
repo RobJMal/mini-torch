@@ -36,7 +36,9 @@ class Linear():
         self._bias = value
 
     def forward(self, input_data: np.ndarray) -> np.ndarray:
-        self._check_shape(input_data, self._bias)
+        if input_data.shape[0] != self._weights.shape[1]:
+            raise ValueError(f"new weight updates is invalid size. Got {input_data.shape[0]}, expected {self._weights.shape[1]}")
+
         self._input_data = input_data
         return self._weights @ input_data + self.bias
 
