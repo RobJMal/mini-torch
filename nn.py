@@ -2,8 +2,8 @@ import numpy as np
 
 class Linear():
     def __init__(self, in_features: int, out_features: int) -> None:
-        self._weights = np.zeros((in_features, out_features))
-        self._bias = np.zeros((in_features, 1))
+        self._weights = np.zeros((out_features, in_features))
+        self._bias = np.zeros((out_features, 1))
 
     @property
     def weights(self) -> np.ndarray:
