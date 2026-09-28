@@ -41,3 +41,14 @@ class ReLU():
 
     def forward(self, input_data: np.ndarray) -> np.ndarray:
         return np.fmax(0, input_data)
+
+class MSELoss():
+    def __init__(self) -> None:
+        pass
+
+    def forward(self, input_data: np.ndarray, target_data: np.ndarray) -> float:
+        self._diff_data = input_data - target_data
+        return np.square(self._diff_data).mean()
+
+    def backward(self) -> np.ndarray:
+        return self._diff_data * 2
