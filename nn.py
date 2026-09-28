@@ -30,3 +30,10 @@ class Linear():
         """
         if expected.shape != data.shape:
             raise ValueError(f"new weight updates is invalid size. Got {data.shape}, expected {expected.shape}")
+
+class ReLU():
+    def __init__(self) -> None:
+        pass
+
+    def forward(self, input_data: np.ndarray) -> np.ndarray:
+        return np.fmax(0, input_data)

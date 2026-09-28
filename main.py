@@ -1,5 +1,5 @@
 import numpy as np
-from nn import Linear
+from nn import Linear, ReLU
 
 def main():
     print("Hello from mini-torch!")
@@ -16,7 +16,13 @@ def main():
     print("")
 
     input_data = np.array([[-2], [4]])
-    print(f"output: {test1.output_data(input_data)}")
+    output_test1 = test1.forward(input_data)
+    print(f"output: {output_test1}")
+    print("")
+
+    relu1 = ReLU()
+    hlayer1 = relu1.forward(output_test1)
+    print(f"hidden layer1 output: {hlayer1}")
 
 
 if __name__ == "__main__":
