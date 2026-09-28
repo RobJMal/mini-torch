@@ -6,9 +6,9 @@ LR = 0.001
 class MLP():
     def __init__(self) -> None:
         self._layers = [
-            Linear(2, 2),
+            Linear(2, 8),
             ReLU(),
-            Linear(2, 2),
+            Linear(8, 1),
         ]
 
     def forward(self, input_data: np.ndarray) -> np.ndarray:
@@ -30,21 +30,28 @@ class MLP():
                 layer.bias = layer.bias - LR * layer.bias_grad
 
 def main():
-    input_data = np.array([[1], [0.5]])
-    target_data = np.array([[0.5], [2]])
+
+    dataset = [
+        # (input, target)
+        (np.array([[0],[0]]), np.array([0])),
+        (np.array([[0],[1]]), np.array([1])),
+        (np.array([[1],[0]]), np.array([1])),
+        (np.array([[1],[1]]), np.array([0])),
+    ]
 
     mlp = MLP()
     loss_fn = MSELoss()
 
     for step in range(1000):
-        prediction = mlp.forward(input_data)
-        loss = loss_fn.forward(prediction, target_data)
-        grad = loss_fn.backward()
-        mlp.backward(grad)
-        mlp.update_linear_layers()
+        for input_data, target_data in dataset:
+            prediction = mlp.forward(input_data)
+            loss = loss_fn.forward(prediction, target_data)
+            grad = loss_fn.backward()
+            mlp.backward(grad)
+            mlp.update_linear_layers()
 
-        if step % 50 == 0:
-            print(loss)
+            if step % 50 == 0:
+                print(loss)
     
 if __name__ == "__main__":
     main()
