@@ -52,6 +52,12 @@ def main():
 
             if step % 50 == 0:
                 print(loss)
+
+    # Testing on dataset
+    for input_data, target_data in dataset:
+        prediction = mlp.forward(input_data)
+        prediction = 0 if prediction < 0.5 else 1
+        print(f"Prediction: {prediction} | Target: {target_data}")
     
 if __name__ == "__main__":
     main()
