@@ -14,8 +14,26 @@ class Linear():
         return self._weights
 
     @property
+    def weights_grad(self) -> np.ndarray:
+        return self._weights_grad
+
+    @weights.setter
+    def weights(self, value: np.ndarray) -> None:
+        self._check_shape(value, self._weights)
+        self._weights = value
+
+    @property
     def bias(self) -> np.ndarray:
         return self._bias
+
+    @property
+    def bias_grad(self) -> np.ndarray:
+        return self._bias_grad
+
+    @bias.setter
+    def bias(self, value: np.ndarray) -> None:
+        self._check_shape(value, self._bias)
+        self._bias = value
 
     def forward(self, input_data: np.ndarray) -> np.ndarray:
         self._check_shape(input_data, self._bias)
@@ -23,17 +41,9 @@ class Linear():
         return self._weights @ input_data + self.bias
 
     def backward(self, prev_layer_grad: np.ndarray) -> np.ndarray:
-        self._grad_weights = np.outer(prev_layer_grad, self._input_data.T) 
-        self._grad_bias = prev_layer_grad
+        self._weights_grad = np.outer(prev_layer_grad, self._input_data.T) 
+        self._bias_grad = prev_layer_grad
         return self._weights.T @ prev_layer_grad
-
-    def update_weights(self, value) -> None:
-        self._check_shape(value, self._weights)
-        self._weights = value
-
-    def update_bias(self, value: np.ndarray) -> None:
-        self._check_shape(value, self._bias)
-        self._bias = value
 
     def _check_shape(self, data: np.ndarray, expected: np.ndarray) -> None:
         """Checks shape of inputs to ensure valid multiplication
