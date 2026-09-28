@@ -1,8 +1,12 @@
 import numpy as np
 
+RNG_SEED = 137
+
 class Linear():
     def __init__(self, in_features: int, out_features: int) -> None:
-        self._weights = np.zeros((out_features, in_features))
+        # Need to initialize weights randomly so network can learn (symmetric init causes issues)
+        rng = np.random.default_rng(RNG_SEED)
+        self._weights = rng.standard_normal((out_features, in_features))
         self._bias = np.zeros((out_features, 1))
 
     @property
