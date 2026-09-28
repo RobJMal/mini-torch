@@ -6,5 +6,5 @@ class Linear():
         self._bias = np.zeros((1, in_features))
 
     @property
-    def weights(self):
+    def weights(self) -> np.ndarray:
         return self._weights
