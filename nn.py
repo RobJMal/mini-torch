@@ -13,6 +13,10 @@ class Linear():
     def bias(self) -> np.ndarray:
         return self._bias
 
+    def forward(self, input_data: np.ndarray) -> np.ndarray:
+        self._check_shape(input_data, self._bias)
+        return self._weights @ input_data + self.bias
+
     def update_weights(self, value) -> None:
         self._check_shape(value, self._weights)
         self._weights = value
@@ -20,10 +24,6 @@ class Linear():
     def update_bias(self, value: np.ndarray) -> None:
         self._check_shape(value, self._bias)
         self._bias = value
-
-    def output_data(self, input_data: np.ndarray) -> np.ndarray:
-        self._check_shape(input_data, self._bias)
-        return self._weights @ input_data + self.bias
 
     def _check_shape(self, data: np.ndarray, expected: np.ndarray) -> None:
         """Checks shape of inputs to ensure valid multiplication
